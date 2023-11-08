@@ -1,10 +1,10 @@
 import React from 'react'
-import { Button, FormContainer, Input } from '../atoms'
+import { Button, FormContainer, Input } from '../../components/atoms'
 import { Controller, useForm } from 'react-hook-form'
 import {yupResolver} from "@hookform/resolvers/yup"
 import { registerValidationSchema } from './RegisterFormValidation'
 import { useDispatch } from 'react-redux'
-import { authenticateUser } from '../../redux'
+import { authenticateUser } from '../../redux/slices'
 import { useNavigate } from 'react-router-dom'
 
 
@@ -27,7 +27,9 @@ const onSubmit = (data)=>{
     dispatch(authenticateUser({formValues: data})).unwrap()
     .then(
         navigate("/")
-    )
+    ) .catch((err)=>{
+        console.log("Catch Block:", err)
+    })
 }
 
 

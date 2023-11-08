@@ -17,6 +17,6 @@ export const registerValidationSchema = yup.object({
     password: yup
     .string()
     .required()
-    .min(8, "Last Name Should Be At Least 8 Characters Long")
-    .max(50, "Last Name Should Be At Most 50 Characters Long"),
+    .min(8, "Password Should Be At Least 8 Characters Long")
+    .max(50, "Password Should Be At Most 50 Characters Long"),
 })

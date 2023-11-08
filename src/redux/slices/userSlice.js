@@ -3,14 +3,15 @@ import {axiosInstance} from "../../helpers"
 
 export const authenticateUser = createAsyncThunk(
     "user/authenticateUser",
-    async ({formValues}, {rejectWithValue}) => {
+    async ({formValues, isLogin}, {rejectWithValue}) => {
         try {
-            const endpoint = "/users/register"
+            const endpoint = `/users/${isLogin ? "login" : "register"}`
             const {data} = await axiosInstance.post(endpoint, formValues)
             console.log("data:", data)
             return data
         } catch (error) {
-            return rejectWithValue(error?.response?.data?.message)
+            console.log("error:", error)
+            return rejectWithValue(error?.message)
         }
     }
 )
