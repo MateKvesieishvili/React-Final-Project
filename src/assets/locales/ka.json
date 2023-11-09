@@ -6,5 +6,11 @@
     "first_name": "სახელი",
     "last_name": "გვარი",
     "email": "ელექტრონული ფოსტა",
-    "password": "პაროლი"
+    "password": "პაროლი",
+    "product_name": "პროდუქტის სახელი",
+    "product_description": "პროდუქტის აღწერა",
+    "product_brand": "პროდუქტის ბრენდი",
+    "product_category": "პროდუქტის კატეგორია",
+    "product_price": "პროდუქტის ღირებულება"
+
 }

@@ -1,11 +1,8 @@
 import { FormControl, MenuItem, Select } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { languageCodes } from '../../helpers'
 
-export const languageCodes = {
-    en: "English",
-    ka: "Georgian"
-}
 
 export const LanguageSelect = () => {
     
@@ -32,7 +29,7 @@ export const LanguageSelect = () => {
             >
                 {Object.entries(languageCodes).map((item)=>{
                     const [languageKey, languageValue] = item
-                    return <MenuItem value={languageKey}>{languageValue}</MenuItem>
+                    return <MenuItem key={languageKey} value={languageKey}>{languageValue}</MenuItem>
                 })}
             </Select>
         </FormControl>

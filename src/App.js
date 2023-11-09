@@ -2,12 +2,17 @@ import React from 'react'
 import RoutesComponent from './Routes'
 import { LanguageSelect } from './components/atoms'
 import { useTranslation } from 'react-i18next'
+import { useSelector } from 'react-redux'
+import { isUserAdmin } from './helpers'
+
+
 
 const App = () => {
   const {t} = useTranslation()
+  const user = useSelector((state)=>state.user.userData)
+  console.log(isUserAdmin(user))
   return (
     <div>
-      <h1>{t("home")}</h1>
       <LanguageSelect/>
       <RoutesComponent/>
     </div>

@@ -6,5 +6,10 @@
     "first_name": "First Name",
     "last_name": "Last Name",
     "email": "Email",
-    "password": "Password"
+    "password": "Password",
+    "product_name": "Product Name",
+    "product_description": "Product Description",
+    "product_brand": "Product Brand",
+    "product_category": "Product Category",
+    "product_price": "Product Price"
 }
