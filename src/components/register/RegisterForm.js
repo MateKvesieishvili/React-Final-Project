@@ -6,6 +6,7 @@ import { registerValidationSchema } from './RegisterFormValidation'
 import { useDispatch } from 'react-redux'
 import { authenticateUser } from '../../redux/slices'
 import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
 
 export const RegisterForm = () => {
@@ -18,6 +19,8 @@ const {
     resolver: yupResolver(registerValidationSchema),
     mode: "onChange"
 })
+
+const {t} = useTranslation()
 
 const dispatch = useDispatch()
 const navigate = useNavigate()
@@ -44,7 +47,7 @@ const onSubmit = (data)=>{
                 return <Input name={name} onChange={onChange}
                 error={!!errors.firstName}
                 helperText = {errors.firstName?.message}
-                label="First Name"
+                label={t("first_name")}
 
                 />
             }}
@@ -59,7 +62,7 @@ const onSubmit = (data)=>{
                 return <Input name={name} onChange={onChange}
                 error={!!errors.lastName}
                 helperText = {errors.lastName?.message}
-                label="Last Name"
+                label={t("last_name")}
                 />
             }}
         />
@@ -72,7 +75,7 @@ const onSubmit = (data)=>{
                 return <Input name={name} onChange={onChange}
                 error={!!errors.email}
                 helperText = {errors.email?.message}
-                label="E-Mail"
+                label={t("email")}
                 />
             }}
         />
@@ -85,12 +88,12 @@ const onSubmit = (data)=>{
                 return <Input name={name} onChange={onChange}type='password'
                 error={!!errors.password}
                 helperText = {errors.password?.message}
-                label="Password"
+                label={t("password")}
                 />
             }}
         
         />
-            <Button onClick={handleSubmit(onSubmit)}>Register</Button> 
+            <Button onClick={handleSubmit(onSubmit)}>{t("register")}</Button> 
     </FormContainer>
   )
 }

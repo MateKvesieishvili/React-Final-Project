@@ -6,12 +6,15 @@ import { loginValidationSchema } from './LoginFormValidation';
 import { useDispatch } from 'react-redux';
 import { authenticateUser } from '../../redux';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 export const LoginForm = () => {
   const { control, handleSubmit, formState: { errors } } = useForm({
     resolver: yupResolver(loginValidationSchema),
     mode: 'onChange'
   });
+
+  const {t} = useTranslation()
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -27,7 +30,7 @@ export const LoginForm = () => {
       });
   };
 
-  console.log('errors:', errors);
+//   console.log('errors:', errors);
 
   return (
     <FormContainer>
@@ -38,7 +41,7 @@ export const LoginForm = () => {
             <Input
               name={name}
               onChange={onChange}
-              label="Email"
+              label={t("email")}
               error={!!errors.email}
               helperText={errors.email?.message}
             />
@@ -53,7 +56,7 @@ export const LoginForm = () => {
               name={name}
               onChange={onChange}
               type="password"
-              label="Password"
+              label={t("password")}
               error={!!errors.password}
               helperText={errors.password?.message}
             />
@@ -61,7 +64,7 @@ export const LoginForm = () => {
         }}
       />
 
-      <Button onClick={handleSubmit(onSubmit)}>Log In</Button>
+      <Button onClick={handleSubmit(onSubmit)}>{t("sign_in")}</Button>
     </FormContainer>
   );
 };
