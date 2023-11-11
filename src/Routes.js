@@ -20,6 +20,14 @@ const RoutesComponent = () => {
             </ProtectedRoute>
           }
         />
+        <Route
+        path="/products/edit/:id"
+        element={
+          <ProtectedRoute hasAccess={isUserAdmin(user)}>
+              <ProductFormPage/>
+            </ProtectedRoute>
+        }
+        />
     </Routes>
   )
 }

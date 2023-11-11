@@ -1,21 +1,57 @@
-import React from 'react'
-import { FormContainer, Input } from '../../atoms'
+import React, { useEffect, useState } from 'react'
+import { Button, FormContainer, Input } from '../../atoms'
 import { Controller, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { saveProductValidationSchema } from './ProductFormValidation'
 import { useTranslation } from 'react-i18next'
+import  FileBase64 from "react-file-base64"
+import { useDispatch } from 'react-redux'
+import { saveProduct, setSelectedProduct } from '../../../redux'
+import { useNavigate } from 'react-router-dom'
+import { useProduct } from '../../../hooks'
 
 
 export const ProductForm = () => {
-    const {control, formState:{errors}
+    const {control, 
+    formState:{errors},
+    handleSubmit,
 } = useForm({
     resolver: yupResolver(saveProductValidationSchema),
     mode: "onChange"
 })
+
+    const [image, setImage] = useState("")
+    const dispatch = useDispatch()
     const {t} = useTranslation()
+    const navigate = useNavigate()
+    const {selectedProduct} = useProduct()
+
+    useEffect(()=>{
+        if(selectedProduct) {
+            setImage(selectedProduct.image)
+        }
+    },[selectedProduct])
+
+    const onSave = (data)=>{
+        console.log({...data, image})
+        dispatch(saveProduct({product: {...data, image}, productId: selectedProduct?._id}))
+        .unwrap()
+        .then(()=>{
+            navigate("/")
+        })
+        .catch((err)=>{
+            console.log(err)
+        })
+    }
+
+    useEffect(()=>{
+        return ()=>{
+            dispatch(setSelectedProduct(null))
+        }
+    }, [])
   return (
     <FormContainer>
-        <Controller name="name" defaultValue="" control={control} render={({field})=>{
+        <Controller name="name" defaultValue={selectedProduct?.name} control={control} render={({field})=>{
             const{name, onChange, value} = field
             return (
                 <Input
@@ -28,7 +64,7 @@ export const ProductForm = () => {
                     />
             )
         }}/>
-        <Controller name="description" defaultValue="" control={control} render={({field})=>{
+        <Controller name="description" defaultValue={selectedProduct?.description} control={control} render={({field})=>{
             const{name, onChange, value} = field
             return (
                 <Input
@@ -41,7 +77,7 @@ export const ProductForm = () => {
                     />
             )
         }}/>
-        <Controller name="brand" defaultValue="" control={control} render={({field})=>{
+        <Controller name="brand" defaultValue={selectedProduct?.brand} control={control} render={({field})=>{
             const{name, onChange, value} = field
             return (
                 <Input
@@ -54,7 +90,7 @@ export const ProductForm = () => {
                     />
             )
         }}/>
-        <Controller name="category" defaultValue="" control={control} render={({field})=>{
+        <Controller name="category" defaultValue={selectedProduct?.category}control={control} render={({field})=>{
             const{name, onChange, value} = field
             return (
                 <Input
@@ -67,7 +103,7 @@ export const ProductForm = () => {
                     />
             )
         }}/>
-        <Controller name="price" defaultValue="" control={control} render={({field})=>{
+        <Controller name="price" defaultValue={selectedProduct?.price} control={control} render={({field})=>{
             const{name, onChange, value} = field
             return (
                 <Input
@@ -81,6 +117,12 @@ export const ProductForm = () => {
                     />
             )
         }}/>
+
+        <FileBase64 type="file" multiple={false} onDone={({base64})=>{
+            setImage(base64)
+        }}/>
+        <Button onClick={handleSubmit(onSave)}>{t("save_product")}</Button>
+
     </FormContainer>
   )
 }
