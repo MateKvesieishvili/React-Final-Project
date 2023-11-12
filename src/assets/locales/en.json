@@ -12,5 +12,9 @@
     "product_brand": "Product Brand",
     "product_category": "Product Category",
     "product_price": "Product Price",
-    "save_product": "Save Product"
+    "save_product": "Save Product",
+    "shopping_cart": "Shopping Cart",
+    "search_bar": "Search Bar",
+    "logout": "Logout",
+    "add_product": "Add Product"
 }

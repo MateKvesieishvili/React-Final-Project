@@ -67,7 +67,7 @@ const productSlice = createSlice({
       state.error = action.payload;
     });
     builder.addCase(fetchHomePageProducts.pending, (state) => {
-      state.loading = false;
+      state.loading = true;
     });
     builder.addCase(fetchHomePageProducts.fulfilled, (state, action) => {
       state.loading = false;
@@ -79,7 +79,7 @@ const productSlice = createSlice({
       state.error = action.payload;
     });
     builder.addCase(deleteProduct.pending, (state)=>{
-        state.loading = false
+        state.loading = true
     })
     builder.addCase(deleteProduct.fulfilled, (state)=>{
         state.loading = false

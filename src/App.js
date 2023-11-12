@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux'
 import { fetchHomePageProducts } from './redux'
 import { Link } from 'react-router-dom'
 import { Grid } from '@mui/material'
-import byteMarketSVG from "./assets/icons/BYTEMARKET LOGO 2 1.svg"
+import { Header } from './components/header'
 
 
 
@@ -25,21 +25,8 @@ const App = () => {
         backgroundColor: '#FDFCFF',
         overflowX: 'hidden',
       }}>
-        <Grid item sx={{
-          width: '100%',
-          padding: '34px 76px',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          backgroundColor: '#EFF2FF',
-        }}>
-          <Link to="/">
-            <img src={byteMarketSVG} alt='logo' sx={{
-              width: "195px",
-              height: "64px",
-            }}></img>
-          </Link>
-          <LanguageSelect/>
+        <Grid item>
+          <Header/>
         </Grid>
         <Grid sx={{
           paddingTop: 5,
