@@ -11,10 +11,22 @@
     "product_description": "Product Description",
     "product_brand": "Product Brand",
     "product_category": "Product Category",
+    "specs": "Specs",
     "product_price": "Product Price",
     "save_product": "Save Product",
     "shopping_cart": "Shopping Cart",
     "search_bar": "Search Bar",
     "logout": "Logout",
-    "add_product": "Add Product"
+    "add_product": "Add Product",
+    "delete": "Delete",
+    "edit": "Edit",
+    "quantity": "Quantity",
+    "total": "Total",
+    "clear_cart": "Clear Cart",
+    "save_cart": "Save Cart",
+    "from_high_to_low": "Sort by Price: High to Low",
+    "from_low_to_high": "Sort by Price: Low to High",
+    "from_z_to_a": "Sort by Alphabetical: Z to A",
+    "from_a_to_z": "Sort by Aplphabetical: A to Z",
+    "more_info": "More Info ..."
 }

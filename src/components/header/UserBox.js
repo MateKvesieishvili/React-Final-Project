@@ -3,11 +3,16 @@ import { Avatar, Box, IconButton, Menu, MenuItem } from '@mui/material'
 import React, { useState } from 'react'
 import { getUserRole, getUserInitials, getUserFullName, isUserAdmin } from '../../helpers'
 import { useUser } from '../../hooks'
-import { Button, Text } from '../atoms'
+import { Button, LanguageSelect, Text } from '../atoms'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
-import { logout } from '../../redux'
+import { clearCart, logout } from '../../redux'
 import { useDispatch } from 'react-redux'
+import AddCardIcon from '@mui/icons-material/AddCard';
+import LogoutIcon from '@mui/icons-material/Logout';
+import LoginIcon from '@mui/icons-material/Login';
+import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
+
 
 const StyledBox = styled(Box)(()=>({
     display: "flex",
@@ -48,24 +53,32 @@ export const UserBox = () => {
             <StyledBox>
                 {!user && (<>
                     <MenuItem>
-                        <Button onClick={()=> navigate("/login")}>{t("sign_in")}</Button>
-                        <Button onClick={()=> navigate("/register")}>{t("sign_up")}</Button>
+                        <Button onClick={()=> navigate("/login")}>{t("sign_in")} <LoginIcon/></Button>
+                        <Button onClick={()=> navigate("/register")}>{t("sign_up")} <AppRegistrationIcon/></Button>
                     </MenuItem>
                 </>)}
                 {user && (
                     <MenuItem>
-                        <Button onClick={()=>dispatch(logout())} >{t("logout")}</Button>
+                        <Button onClick={()=>{
+                            dispatch(logout())
+                            dispatch(clearCart())
+                            localStorage.setItem("cartItems", JSON.stringify([]))
+                    }
+                        } >{t("logout")} <LogoutIcon/>
+                        </Button>
+
                     </MenuItem>
                 )}
                 {
                     isUserAdmin(user) && (
                         <MenuItem>
                             <Button onClick={()=>navigate("/product/new")}>
-                                {t("add_product")}
+                                {t("add_product")} <AddCardIcon/>
                             </Button>
                         </MenuItem>
                     )
                 }
+                        <LanguageSelect/>
             </StyledBox>
         </Menu>
     </Box>

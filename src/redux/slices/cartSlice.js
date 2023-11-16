@@ -1,11 +1,40 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { axiosInstance } from "../../helpers";
+
+export const saveCart = createAsyncThunk(
+    "cart/saveCart",
+    async ({userId, cartItems}, {rejectWithValue, dispatch}) =>{
+        try {
+            await axiosInstance.put(`/users/${userId}/cart`,{
+                products: cartItems,
+            })
+            dispatch(fetchCart(userId))
+        } catch (error) {
+            return rejectWithValue("could not save cart")
+        }
+    }
+
+)
+
+export const fetchCart = createAsyncThunk(
+    "cart/fetchCart",
+    async (userId, {rejectWithValue})=>{
+        try {
+            const {data} = await axiosInstance.get(`/users/${userId}/cart`)
+            localStorage.setItem("cartItems", JSON.stringify(data?.cart))
+            return data
+        } catch (error) {
+            return rejectWithValue("could not fetch cart")
+        }
+    }
+)
 
 const cartSlice = createSlice({
     name: "cart",
     initialState:{
         loading: false,
         error: null,
-        cartItems: [],
+        cartItems: JSON.parse(localStorage.getItem("cartItems")) || [],
     },
     reducers:{
         clearCart:(state)=>{
@@ -27,6 +56,7 @@ const cartSlice = createSlice({
             }else{
                 state.cartItems.push({product: action.payload, quantity: 1})
             }
+            localStorage.setItem("cartItems", JSON.stringify(state.cartItems))
         },
         removeFromCart: (state, action)=>{
             const productId = action.payload
@@ -46,8 +76,34 @@ const cartSlice = createSlice({
                     (item)=> item.product._id !== productId
                 )
             }
+            localStorage.setItem("cartItems", JSON.stringify(state.cartItems))
         },
-    }
+    },
+    extraReducers:(builder)=>{
+        builder.addCase(saveCart.pending, (state)=>{
+            state.loading = true
+            state.error = null
+        })
+        builder.addCase(saveCart.fulfilled, (state)=>{
+            state.loading = false
+        })
+        builder.addCase(saveCart.rejected, (state, action)=>{
+            state.loading = false
+            state.error = action.payload
+        })
+        builder.addCase(fetchCart.pending,(state)=>{
+            state.loading = true
+            state.error = null
+        })
+        builder.addCase(fetchCart.fulfilled,(state, action)=>{
+            state.loading = false
+            state.cartItems = action.payload.cart
+        })
+        builder.addCase(fetchCart.rejected,(state, action)=>{
+            state.loading = false
+            state.error = action.payload
+        })
+    },
 })
 
 export const cartReducer = cartSlice.reducer

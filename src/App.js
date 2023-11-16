@@ -3,19 +3,29 @@ import RoutesComponent from './Routes'
 import { LanguageSelect } from './components/atoms'
 import { useTranslation } from 'react-i18next'
 import { useDispatch } from 'react-redux'
-import { fetchHomePageProducts } from './redux'
+import { fetchCart, fetchHomePageProducts } from './redux'
 import { Link } from 'react-router-dom'
 import { Grid } from '@mui/material'
 import { Header } from './components/header'
+import { useUser } from './hooks'
 
 
 
 const App = () => {
   const {t} = useTranslation()
   const dispatch = useDispatch()
+  const {user} = useUser()
+
+ useEffect(()=>{
+  if (user?._id){
+    dispatch(fetchCart(user._id))
+  }
+ }, [dispatch, user])
+
   useEffect(()=>{
     dispatch(fetchHomePageProducts())
   }, [dispatch])
+
   return (
     <div>
       <Grid sx={{

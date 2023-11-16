@@ -40,6 +40,17 @@ export const deleteProduct = createAsyncThunk(
     }
 )
 
+export const fetchCategoryProducts = createAsyncThunk(
+    "products/fetchCategoryProducts", 
+    async({categoryName, queryUrl}, {rejectWithValue}) =>{
+      try {
+        const {data} = await axiosInstance.get(`/products/categories/${categoryName}${queryUrl}`)
+        return data
+      } catch (error) {
+        return rejectWithValue("error fetching gategory products")
+      }
+  }
+)
 const productSlice = createSlice({
   name: "product",
   initialState: {
@@ -48,6 +59,9 @@ const productSlice = createSlice({
     homePageProducts: [],
     error: null,
     selectedProduct: null,
+    productCategories: [],
+    categoryProducts: [],
+    totalPage: 0,
   },
   reducers: {
     setSelectedProduct: (state, action) => {
@@ -72,7 +86,7 @@ const productSlice = createSlice({
     builder.addCase(fetchHomePageProducts.fulfilled, (state, action) => {
       state.loading = false;
       state.homePageProducts = action.payload.products;
-      //* state.categories = action.payload.categories
+      state.productCategories = action.payload.categories
     });
     builder.addCase(fetchHomePageProducts.rejected, (state, action) => {
       state.loading = false;
@@ -87,6 +101,18 @@ const productSlice = createSlice({
     builder.addCase(deleteProduct.rejected, (state, action)=>{
         state.loading = false
         state.error = action.payload
+    })
+    builder.addCase(fetchCategoryProducts.pending,(state)=>{
+      state.loading = true
+    })
+    builder.addCase(fetchCategoryProducts.fulfilled,(state, action)=>{
+      state.loading = false
+      state.categoryProducts = action.payload.products
+      state.totalPages = action.payload.totalPages
+    })
+    builder.addCase(fetchCategoryProducts.rejected,(state, action)=>{
+      state.loading = false
+      state.error = action.payload
     })
   },
 });

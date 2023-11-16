@@ -1,7 +1,7 @@
-import { TextField } from "@mui/material";
+import { TextField } from '@mui/material';
 
 
-export const Input = ({
+export const InputField = ({
     type = "text",
     label,
     error,
@@ -10,12 +10,13 @@ export const Input = ({
     onChange,
     value,
     styles,
+    variant,
     ...rest
 
 }) => {
     return (
         <TextField
-            name={name} 
+            name={name}
             value={value}
             onChange={onChange}
             type={type}

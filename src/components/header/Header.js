@@ -1,11 +1,15 @@
-import { AppBar, Box, Toolbar, styled } from '@mui/material'
+import { AppBar, Badge, Box, Button, Toolbar, styled } from '@mui/material'
 import byteMarketSVG from "../../assets/icons/BYTEMARKET LOGO 2 1.svg"
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Searchbar } from './Searchbar'
 import { LanguageSelect } from '../atoms'
 import {UserBox} from "./UserBox"
 import { useTranslation } from 'react-i18next'
+import { CartDrawer } from './CartDrawer'
+import {AiOutlineShoppingCart} from 'react-icons/ai';
+import { useCart } from '../../hooks'
+import { ProductCategories } from './ProductCategories'
 
 
 const StyledAppBar = styled(AppBar)(()=>(
@@ -27,8 +31,10 @@ const StyledToolBar = styled(Toolbar)(()=>(
 ))
 export const Header = () => {
     const {t} = useTranslation()
+    const [isCartOpen, setIsCartOpen] = useState(false)
+    const {cartItems} =  useCart()
   return (
-    <div>
+    <Box>
         <StyledAppBar>
             <StyledToolBar>
                 <Link to="/">
@@ -39,12 +45,22 @@ export const Header = () => {
                 sx={{
                 display: "flex",
                 alignItems: "center",
-                }}><button>{t("shopping_cart")}</button></Box>
-                <UserBox></UserBox>
-                <LanguageSelect/>
+                }}>
+                    <Button onClick={()=>setIsCartOpen(true)}>
+                        <Badge badgeContent={cartItems.length} color="primary">
+                            <AiOutlineShoppingCart size={30} color="#003049"/>
+                        </Badge>
+                    </Button>
+                     <UserBox/>
+                </Box>
             </StyledToolBar>
+                <ProductCategories/>
         </StyledAppBar>
-    </div>
+        <CartDrawer 
+            isCartOpen={isCartOpen} 
+            setIsCartOpen={setIsCartOpen}
+            cartItems={cartItems}/>
+    </Box>
   )
 }
 
