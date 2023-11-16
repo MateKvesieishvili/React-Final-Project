@@ -27,8 +27,6 @@ export const LoginForm = () => {
       .unwrap()
       .then(() => {
         navigate('/');
-      }). then(()=>{
-        showAlert("Sucessfylly Loged In", "success")
       })
       .catch((error) => {
         showAlert(error, "error")

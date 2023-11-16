@@ -88,10 +88,6 @@ export const Searchbar = () => {
                     border: "none",
                     outline: "none"
                     }}
-                    startAdornment={
-                        <InputAdornment position="start">
-                            <SearchIcon sx={{ color: "#003049" }} />     
-                        </InputAdornment>}
                     disableUnderline
                     label={t("search_bar")}
                     />)

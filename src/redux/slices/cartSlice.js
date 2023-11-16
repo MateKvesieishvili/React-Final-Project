@@ -21,7 +21,7 @@ export const fetchCart = createAsyncThunk(
     async (userId, {rejectWithValue})=>{
         try {
             const {data} = await axiosInstance.get(`/users/${userId}/cart`)
-            localStorage.setItem("cartItems", JSON.stringify(data?.cart))
+            localStorage.setItem("cartItems", JSON.stringify(data.cart))
             return data
         } catch (error) {
             return rejectWithValue("could not fetch cart")
