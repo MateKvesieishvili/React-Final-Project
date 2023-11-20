@@ -1,25 +1,16 @@
-import axios from "axios";
-import { checkTokenValidity } from "./utils";
+import axios from "axios"
 
 export const axiosInstance = axios.create({
-    baseURL: "http://localhost:3001"
+    baseURL: "http://localhost:3001",
 })
 
-
-axiosInstance.interceptors.request.use(async(req)=>{
+axiosInstance.interceptors.request.use(async (req)=>{
     const token = localStorage.getItem("token")
     const refreshToken = localStorage.getItem("refresh_token")
-    if(!token || !refreshToken) return req
+    console.log("token" + token, refreshToken)
+    if (!token || !refreshToken) return req
 
 
-
-    req.headers.Authorization = `Bearer ${token}`
-    const isExpired = checkTokenValidity(token)
-    if(!isExpired) return req
-    const {data} = await axios.post("http://localhost:3001/users/refresh",
-    {refresh_token: refreshToken})
-    const {token: newAccessToken} = data
-    localStorage.setItem("token", newAccessToken)
     req.headers.Authorization = `Bearer ${token}`
     return req
 })

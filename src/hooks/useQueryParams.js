@@ -4,7 +4,8 @@ export const useQueryParams = (key) => {
   const [params, setParams] = useSearchParams()
 
   const changeQueryValue = (key, value) => {
-    setParams({ ...params, [key]: value })
+    params.set(key, value)
+    setParams(params)
   };
 
   return {

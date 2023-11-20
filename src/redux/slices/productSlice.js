@@ -20,7 +20,7 @@ export const fetchHomePageProducts = createAsyncThunk(
   async (_, { rejectWithValue, dispatch }) => {
     try {
       const { data } = await axiosInstance.get("/products");
-      dispatch(fetchHomePageProducts(data)); 
+      dispatch(fetchHomePageProducts.fulfilled(data));
       return data;
     } catch (error) {
       return rejectWithValue("error fetching homepage products");

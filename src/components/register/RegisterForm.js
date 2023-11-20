@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, FormContainer, InputField } from '../atoms'
+import { Alert, Button, FormContainer, InputField } from '../../components/atoms'
 import { Controller, useForm } from 'react-hook-form'
 import {yupResolver} from "@hookform/resolvers/yup"
 import { registerValidationSchema } from './RegisterFormValidation'
@@ -110,7 +110,7 @@ export const RegisterForm = () => {
                             />;
                         }}
                     />
-    
+                    <Alert handleClose={handleClose} {...alertState} variant="filled"/>
                     <Button onClick={handleSubmit(onSubmit)}>{t("sign_up")}</Button> 
                 </FormContainer>
             </Box>

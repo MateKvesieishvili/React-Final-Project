@@ -33,7 +33,7 @@ export const LoginForm = () => {
       });
   };
 
-//   console.log('errors:', errors);
+  console.log('errors:', errors);
 
   return (
     <Box sx={{
